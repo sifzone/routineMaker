@@ -1,0 +1,21 @@
+{
+  "name": "RoutineMaker",
+  "version": "0.0.1",
+  "description": "Generated with Eclipse npm Tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'Error: no test specified' && exit 1"
+  },
+  "keywords" : ["routine"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies" :  {
+  	"min-angular" : "^1.5.8"
+  },
+  "repository" : {
+  	"type" : "git",
+  	"url" : "https://github.com/sifzone/routineMaker.git"	
+  },
+  "homepage" : "http://localhost:8080/RoutineMaker/"
+  
+}
