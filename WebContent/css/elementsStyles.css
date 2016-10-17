@@ -1,26 +1,126 @@
 @CHARSET "ISO-8859-1";
 
-body{
-	min-width: 980px;	
-	max-width: 1000px;
-	margin:auto;	
+body{	
+	width : 1100px;
+	margin-left : 30px; 
 }
-
 header{
 	position: fixed;
 	top:0;
 	left:0;
 	width:100%;
 	height:70px;
+	color: white;
 	background-color: CadetBlue;
-	opacity: 0.7;
+	opacity: 0.9;
+	padding-left: 40px;
+	z-index: 2;
 }
-.inputRoutine {	
-	position:relative;
-	top: 100px;
+header marquee{
+	position:relative;	
+	margin-left:160px;
+	margin-right:50px;
+	top: 10px;	
+}
+
+.inputRtn{
+	position : relative;	
+	top : 100px;
+	left : 20px;
+	height: 100px;	
+	margin-bottom : 10px;
+	padding : 5px;
+	border : 1px solid Navy;
+	border-left: 5px solid Navy ;
+	box-shadow : 0px 4px 8px 0px rgba(0,0,0,0.2);	
+	background-color : #eaeafa;
+	z-index : 1;
+}
+.inputRtn div{
+	margin-bottom: 5px;
+}
+.submitBtn{
+	position : relative;
+	min-width : 100px;	
+	max-width : 150px;
+}
+.submitBtn a{
+	width : 100%;	
+}
+
+.checkField{ width : 40px;	}
+.idField{	width : 95px; }
+.nameField{ width : 300px; }
+.chrField{ width : 95px; }
+.dayField{ width : 80px; }
+.stField{ width : 90px; }
+.etField{ width : 90px; }
+.placeField{ width : 200px; }
+.sdField{ width : 100px; }
+
+.rtnList{
+	position : relative;
+	top: 110px;
+	left : 20px;
 	width: 100%;
-	height: 100px;
-	margin-left:100px;
+	height: 300px;	
 	margin-right:100px;
-	border: 3px double Orange;
+	margin-bottom: 20px;
+	padding-top : 5px;
+	padding-left: 1px;
+	padding-right : 5px;
+	border: 1px solid DarkTurquoise;
+	border-left: 5px solid #00e6ac;
+	box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+	background-color: #e6fff9;
+	overflow : auto;
+	overflow-x : hidden;
+	overflow-y : auto; 
+}
+.rtnList table tbody tr{
+	border: 1px solid #00e6ac;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+.rtnList table tr:nth-child(even){
+	background-color : MediumTurquoise;
+}
+.rtnList table tr:nth-child(odd){
+	background-color : #d6f5f4;
+}
+.rtnList table th{
+	border-top : 1px solid Silver;
+	border-bottom : 1px solid Silver; 
+	border-left: 1px solid Silver;
+	border-right: 1px solid Silver;	
+	border-radius: 1px;
+	padding: 2px;	
+	margin-bottom: 5px;
+	color : #999999;
+	text-align: center;
+	vertical-align: top;
+	background-color : WhiteSmoke;
+}
+.rtnList table td{
+	padding: 2px;
+}
+
+.displayRtn{
+	position : relative;
+	top: 110px;
+	left : 20px;
+	width: 100%;
+	height: 300px;	
+	margin-right:100px;
+	margin-bottom: 100px;
+	padding-top : 5px;
+	padding-left: 1px;
+	padding-right : 5px;
+	border: 1px solid Peru;
+	border-left: 5px solid Peru;
+	box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+	background-color: PapayaWhip ;
+	overflow : auto;
+	overflow-x : hidden;
+	overflow-y : auto; 
 }

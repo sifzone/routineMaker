@@ -1,23 +1,177 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Routine Maker</title>
-
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-<link rel="stylesheet" href="css/elementsStyles.css">
-<link rel="icon" href="images/routine.png"> 
-
-</head>
-<body>
-	<header>	
-		<h1>Make your own routine beautifully</h1>
-		<marquee>Just enter the data of your each of the class, then see the output</marquee>
-	</header>	
-	<div class="inputRoutine">
+<html ng-app="routine">
+	<head>
+	
+		<meta charset="ISO-8859-1">
+		<title>Routine Maker</title>
 		
-	</div>
-	<div class="routineTable">
-	</div>
-</body>
+		<!-- angular libraries -->
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular-animate.min.js"></script>
+		<script type="text/javascript" src="js/angular-sanitize.min.js"></script>
+		<script type="text/javascript" src="js/ui-bootstrap-tpls-2.1.3.min.js"></script>
+
+		<!-- for time-picker -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.tpl.min.js"></script>
+		<script type="text/javascript" src="https://mgcrea.github.io/angular-strap/docs/angular-strap.docs.tpl.js" data-semver="v2.3.9"></script>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">		
+		<link rel="stylesheet" href="https://mgcrea.github.io/angular-strap/styles/libs.min.css">
+	    <link rel="stylesheet" href="https://mgcrea.github.io/angular-strap/styles/docs.min.css">
+		
+		<!-- own libraries -->
+		<script type="text/javascript" src="js/routine-script.js"></script>		
+		<link rel="stylesheet" href="css/elementsStyles.css">
+		<link rel="icon" href="images/routine.png"> 
+	
+	</head>
+	<body>
+		<header>	
+			<h2>Make your own routine automatically</h2>
+			<marquee style="color:black;">Just enter the data of your each of the class, then see the output</marquee>
+		</header>	
+		<section ng-controller="rtnCtrl">
+			<div class="inputRtn">
+				<form name="routineForm" role="form" ng-submit="addRoutine()" autocomplete="on">
+					<div>
+						<!-- Course Id -->
+						<div class="col-sm-2">
+							<div class="input-group">
+								<span class="input-group-addon">MA-INF</span>
+								<input class="form-control" type="text" ng-model="tuple.id" maxlength="4" size="4" placeholder="Id">
+							</div>
+						</div>
+						<!-- Course Name -->
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-book"></i>
+								</span>
+								<input class="form-control" type="text" ng-model="tuple.name" size="30" placeholder="Course Name">
+							</div>
+						</div>
+						<!-- Credit hours -->
+						<div class="col-sm-2">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-hourglass"></i>
+								</span>
+								<div class="dropdown">
+									<button type="button" class="btn btn-default form-control" bs-dropdown="dropdown" aria-haspopup="true" aria-expanded="true">
+										{{tuple.creditHr}} <span class="fa fa-caret-down"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right"> 
+										<li ng-repeat="chr in credithrs track by $index">
+											<a class="dropdown-item" ng-click="selectCrHr(chr)">{{chr}}</a>
+										</li>
+									</ul>
+								</div>
+								<!-- input class="form-control" type="number" ng-model="tuple.creditHr" maxlength="1" min="2" max="9" size="5" placeholder="Credit Hour"-->
+							</div>
+						</div>
+						<!-- Day(s) -->
+						<div class="col-sm-2">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</span>
+								<div class="dropdown">
+									<button type="button" class="btn btn-default form-control" bs-dropdown="dropdown" aria-haspopup="true" aria-expanded="true">
+										{{tuple.day}} <span class="fa fa-caret-down"></span>
+									</button>
+									<ul class="dropdown-menu dropdown-menu-right"> 
+										<li ng-repeat="day in weekdays track by $index">
+											<a class="dropdown-item" ng-click="selectday(day)">{{day}}</a>
+										</li>
+									</ul>
+								</div>
+								<!-- input class="form-control" type="text" ng-model="tuple.day" size="5" placeholder="Day"-->
+							</div>
+						</div>
+						<!-- Start Time -->
+						<div class="col-sm-2">
+							<div class="input-group" ng-class="{'has-error': routineForm.startTime.$invalid}">
+								<span class="input-group-addon">
+									<i class="fa fa-clock-o"></i>
+								</span>
+								<input class="form-control" type="text" size="8" ng-model="tuple.startTime" ng-change="stChanged()" name="startTime" placement="bottom-right" placeholder="Start time" bs-timepicker>
+							</div>
+						</div>
+						<!-- End Time -->
+						<div class="col-sm-2">
+							<div class="input-group" ng-class="{'has-error': routineForm.endTime.$invalid}">
+								<span class="input-group-addon">
+									<i class="fa fa-clock-o"></i>
+								</span>
+								<input type="text" class="form-control" size="8" ng-model="tuple.endTime" ng-change="etChanged()" name="endTime" placement="bottom-right" placeholder="End time" bs-timepicker>
+							</div>
+						</div>
+						<!-- Place -->
+						<div class="col-md-4">
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-map-marker" aria-hidden="true"></i>
+								</span>
+								<input class="form-control" type="text" ng-model="tuple.place" size="15" placeholder="Place">
+							</div>
+						</div>
+						<!-- Start Date -->
+						<div class="col-md-4">
+							<div class="input-group" ng-class="{'has-error': routineForm.startDate.$invalid}">
+								<span class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								</span>
+		    					<input type="text" class="form-control" ng-model="tuple.startDate" ng-change="sdChanged()" name="startDate" placeholder="Start Date" bs-datepicker>
+							</div>
+						</div>
+						<!-- Submit Button -->
+						<div class="col-sm-2">
+							<div class="submitBtn">								
+								<a class="btn btn-danger" ng-click="addRoutine()">
+									Add <i class="fa fa-plus" aria-hidden="true"></i>
+								</a>
+								<!-- input class="btn btn-danger btnProp" type="submit"  value="add "-->
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>			
+			<div class="rtnList">
+				<table style="width:100%">
+					<thead>
+						<tr>
+							<th class="checkField"></th>
+							<th class="idField">Course Id</th>
+							<th class="nameField">Course Name</th>
+							<th class="chrField">Credit Hours</th>
+							<th class="dayField">Day</th>
+							<th class="stField">Start Time</th>
+							<th class="etField">End Time</th>
+							<th class="placeField">Place</th>
+							<th class="sdField">Start Date</th>				
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="rtn in rtnList track by $index">
+							<td class="checkField"><input type="checkbox" ng-model="rtnCtrl.checked"></td>
+							<td class="idField">{{rtn.id}}</td>
+							<td class="nameField">{{rtn.name}}</td>
+							<td class="chrField">{{rtn.creditHr}}</td>
+							<td class="dayField">{{rtn.day}}</td>
+							<td class="stField">{{rtn.startTime}}</td>
+							<td class="etField">{{rtn.endTime}}</td>
+							<td class="placeField">{{rtn.place}}</td>
+							<td class="sdField">{{rtn.startDate}}</td>
+						</tr>						
+					</tbody>
+				</table>
+			</div>
+			<div class="displayRtn">
+				<table>
+				</table>
+			</div>
+		</section>
+	</body>
 </html>

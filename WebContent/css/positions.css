@@ -1,0 +1,7 @@
+@CHARSET "ISO-8859-1";
+
+.right{
+	position: absolute;
+	right : 0;
+	float: right;
+}
